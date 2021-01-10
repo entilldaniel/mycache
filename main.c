@@ -5,7 +5,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <pthread.h>
-
+#include "proto/handler.h"
 
 #define DEFAULT_PORT 4488
 
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 
 	message = "Connection accepted.";
 	write(new_socket, message, strlen(message));
-
+	
 	pthread_t sniffer_thread;
 	new_sock = malloc(1);
 	*new_sock = new_socket;
@@ -78,20 +78,19 @@ void *connection_handler(void* socket_desc) {
   int read_size;
   char *message, client_message[2048];
   
-  message = "This is the connection handler\n";
-  write(sock, message, strlen(message));
-
   while((read_size = recv(sock, client_message, sizeof(client_message), 0)) > 0 ) {
-  	write(sock , client_message, strlen(client_message));
+	int result = handle(client_message);
+	char str[10];
+	sprintf(str, "%d", result);
+  	write(sock , str, strlen(str));
   }
-	
   if(read_size == 0) {
   	puts("Client disconnected");
-  	fflush(stdout);
+  
   } else if (read_size = -1) {
   	perror("Recv failed.");
   }
-  
+  fflush(stdout);
   free(socket_desc);
   
   return 0;

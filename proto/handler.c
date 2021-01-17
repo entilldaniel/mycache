@@ -15,19 +15,15 @@ struct command *handle(char *data) {
   while (token != NULL) {
 	switch (pass) {
 	case 0:
-	  printf("1:: %s\n", token);
 	  c->action = atoi(token);
 	  break;
 	case 1:
-	  printf("2:: %s\n", token);
 	  c->data_type = atoi(token);
 	  break;
 	case 2:
-	  printf("3\n");
 	  c->data = extract_key(token);
 	  break;	  
 	case 3:
-	  printf("4\n");
 	  c->data = extract_data(c->data_type, token);
 	  break;
 	default:
@@ -48,14 +44,12 @@ char *extract_key(char *data) {
 }
 
 void *extract_data(int data_type, char *data) {
-  printf("data type: %d\n", data_type);
   if (data_type == DATA_NUM) {
 	int *result = malloc(sizeof(int));
 	*result = atoi(data);
 	return result;
   } else if (data_type == DATA_STR) {
 	int len = strlen(data);
-	printf("data: %s\n", data);
 	char *result = malloc(sizeof(char) * (len + 1));
 	strcpy(result, data);
 	return result;

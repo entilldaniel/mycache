@@ -7,3 +7,6 @@ struct command {
 
 struct command *handle(char* data);
 
+void *connecion_handler(void *socket_desc);
+
+

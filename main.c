@@ -56,7 +56,6 @@ int main(int argc, char *argv[]) {
 	*new_sock = new_socket;
 
 	if (pthread_create(&sniffer_thread, NULL, connection_handler, (void*) new_sock) > 0) {
-	  perror("Could not create thread.");
 	  exit(2);
 	}
 
@@ -95,14 +94,6 @@ void *connection_handler(void* socket_desc) {
   
   return 0;
 }
-
-
-  
-
-
-
-
-
 
 
 

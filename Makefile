@@ -1,5 +1,4 @@
 
-
 target:
 	cc main.c proto/handler.c proto/protocol.c -lpthread
 
